@@ -7,6 +7,9 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "types": [
+      "element-plus/global"
+    ],
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "module": "ESNext",
@@ -21,6 +24,24 @@
       ],
       "@/*": [
         "src/*"
+      ],
+      "@api/*": [
+        "src/api/*"
+      ],
+      "@service/*": [
+        "src/service/*"
+      ],
+      "@request/*": [
+        "src/service/request/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@stores/*": [
+        "src/stores/*"
       ]
     },
     "resolveJsonModule": true,

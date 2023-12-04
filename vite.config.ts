@@ -1,20 +1,21 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { ViteAliases } from 'vite-aliases'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { ViteAliases } from "vite-aliases";
 
 // 自动导入vue函数
-import AutoImport from 'unplugin-auto-import/vite'
+import AutoImport from "unplugin-auto-import/vite";
 
 // 自动导入vue组件
-import Components from 'unplugin-vue-components/vite'
+import Components from "unplugin-vue-components/vite";
 
 // https://vitejs.dev/config/
-import UnoCSS from 'unocss/vite'
-import presetAttributify from '@unocss/preset-attributify'
+import UnoCSS from "unocss/vite";
+import presetAttributify from "@unocss/preset-attributify";
 
 // import presetIcons from '@unocss/preset-icons'
-import presetUno from '@unocss/preset-uno'
-
+import presetUno from "@unocss/preset-uno";
+//饿了么组件自动导入
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 export default defineConfig({
   plugins: [
     UnoCSS({
@@ -35,10 +36,10 @@ export default defineConfig({
     vue(),
     ViteAliases({
       deep: true,
-      prefix: '@',
+      prefix: "@",
     }),
     AutoImport({
-      imports: ['vue'],
+      imports: ["vue"],
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/,
@@ -48,15 +49,25 @@ export default defineConfig({
       dts: true,
       eslintrc: {
         enabled: true, // Default `false`
-        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
         globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
       },
+      resolvers: [ElementPlusResolver()],
     }),
-    Components(),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
   ],
   server: {
-    host: 'localhost', // 替换成你实际使用的主机地址
+    host: "localhost", // 替换成你实际使用的主机地址
     port: 9000,
     open: true, // 这里开启自动打开浏览器是可选项
+    // proxy: {
+    //   "/api": {
+    //     target: "http://localhost:3000", //实际请求地址
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
   },
-})
+});
